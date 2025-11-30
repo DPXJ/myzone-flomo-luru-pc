@@ -15,6 +15,8 @@ namespace FlomoQuickNote
         private ConfigManager config;
         private GlobalHotkey hotkey;
         
+        private bool initialized = false;
+        
         public FlomoApp()
         {
             // 初始化配置
@@ -27,14 +29,26 @@ namespace FlomoQuickNote
             // 初始化系统托盘
             InitializeTrayIcon();
             
-            // 注册全局热键
-            RegisterHotkey();
-            
-            // 显示启动消息
-            trayIcon.ShowBalloonTip(3000, 
-                "Flomo快速记录", 
-                $"已启动！按 {config.Hotkey.ToUpper()} 快速记录",
-                ToolTipIcon.Info);
+            // 延迟注册热键，确保消息循环已经建立
+            EventHandler idleHandler = null;
+            idleHandler = (s, e) =>
+            {
+                if (!initialized)
+                {
+                    initialized = true;
+                    Application.Idle -= idleHandler; // 取消订阅
+                    
+                    // 注册热键
+                    RegisterHotkey();
+                    
+                    // 显示启动消息
+                    trayIcon.ShowBalloonTip(3000, 
+                        "Flomo快速记录", 
+                        $"已启动！按 {config.Hotkey.ToUpper()} 快速记录",
+                        ToolTipIcon.Info);
+                }
+            };
+            Application.Idle += idleHandler;
         }
         
         private void InitializeTrayIcon()
@@ -80,16 +94,19 @@ namespace FlomoQuickNote
             {
                 hotkey = new GlobalHotkey(config.Hotkey, ShowMainForm);
                 hotkey.Register();
+                System.Diagnostics.Debug.WriteLine("热键注册成功");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    $"注册全局快捷键失败：{ex.Message}\n\n" +
-                    "您可以在设置中更换其他快捷键。\n" +
-                    "提示：请以管理员权限运行程序。",
-                    "快捷键注册失败",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                System.Diagnostics.Debug.WriteLine($"热键注册失败: {ex.Message}");
+                
+                // 使用Invoke确保在UI线程显示消息框
+                trayIcon.BalloonTipIcon = ToolTipIcon.Warning;
+                trayIcon.BalloonTipTitle = "快捷键注册失败";
+                trayIcon.BalloonTipText = "无法注册快捷键，可能被占用或需要管理员权限\n\n可以在设置中更换";
+                trayIcon.ShowBalloonTip(5000);
+                
+                // 注册失败不应该导致程序退出，继续运行
             }
         }
         
