@@ -7,7 +7,7 @@ namespace FlomoQuickNote
     /// <summary>
     /// 主应用程序类
     /// </summary>
-    public class FlomoApp
+    public class FlomoApp : ApplicationContext
     {
         private NotifyIcon trayIcon;
         private MainForm mainForm;

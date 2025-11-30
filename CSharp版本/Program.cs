@@ -30,11 +30,11 @@ namespace FlomoQuickNote
                 {
                     // 启动应用
                     var app = new FlomoApp();
-                    Application.Run();
+                    Application.Run(app);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"程序启动失败：\n\n{ex.Message}", 
+                    MessageBox.Show($"程序启动失败：\n\n{ex.Message}\n\n{ex.StackTrace}", 
                         "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
