@@ -47,6 +47,12 @@ namespace FlomoQuickNote
         {
             if (!registered)
             {
+                // 确保窗口句柄已创建
+                if (window.Handle == IntPtr.Zero)
+                {
+                    throw new Exception("窗口句柄未创建");
+                }
+                
                 bool success = RegisterHotKey(
                     window.Handle,
                     HOTKEY_ID,
@@ -55,10 +61,18 @@ namespace FlomoQuickNote
                 
                 if (!success)
                 {
-                    throw new Exception("无法注册全局热键，可能与其他程序冲突");
+                    int errorCode = System.Runtime.InteropServices.Marshal.GetLastWin32Error();
+                    string errorMsg = $"无法注册全局热键\n\n";
+                    errorMsg += "可能原因:\n";
+                    errorMsg += "1. 快捷键被其他程序占用\n";
+                    errorMsg += "2. 需要管理员权限运行\n";
+                    errorMsg += "3. 在设置中更换其他快捷键\n\n";
+                    errorMsg += $"错误代码: {errorCode}";
+                    throw new Exception(errorMsg);
                 }
                 
                 registered = true;
+                System.Diagnostics.Debug.WriteLine($"热键注册成功: Modifiers={window.Modifiers}, Key={window.Key}");
             }
         }
         

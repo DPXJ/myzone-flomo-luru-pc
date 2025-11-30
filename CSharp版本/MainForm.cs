@@ -25,15 +25,16 @@ namespace FlomoQuickNote
         {
             // 窗体属性
             this.Text = "快速记录到 Flomo";
-            this.Size = new Size(520, 380);
+            this.ClientSize = new Size(520, 380);
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.TopMost = true;
             this.ShowInTaskbar = false;
-            this.BackColor = Color.FromArgb(250, 250, 250);
-            this.Font = new Font("Microsoft YaHei UI", 9F);
+            this.BackColor = Color.White;
+            this.ForeColor = Color.Black;
+            this.Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular);
             
             // 标题标签
             var titleLabel = new Label
@@ -42,7 +43,8 @@ namespace FlomoQuickNote
                 Location = new Point(20, 20),
                 Size = new Size(480, 30),
                 Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Bold),
-                ForeColor = Color.FromArgb(50, 50, 50)
+                ForeColor = Color.Black,
+                BackColor = Color.Transparent
             };
             this.Controls.Add(titleLabel);
             
@@ -53,9 +55,10 @@ namespace FlomoQuickNote
                 Size = new Size(460, 160),
                 Multiline = true,
                 ScrollBars = ScrollBars.Vertical,
-                Font = new Font("Microsoft YaHei UI", 10F),
+                Font = new Font("Microsoft YaHei UI", 10F, FontStyle.Regular),
                 BorderStyle = BorderStyle.FixedSingle,
-                BackColor = Color.White
+                BackColor = Color.White,
+                ForeColor = Color.Black
             };
             contentTextBox.KeyDown += ContentTextBox_KeyDown;
             this.Controls.Add(contentTextBox);
@@ -67,7 +70,8 @@ namespace FlomoQuickNote
                 Location = new Point(20, 228),
                 Size = new Size(460, 20),
                 ForeColor = Color.Gray,
-                Font = new Font("Microsoft YaHei UI", 8F)
+                BackColor = Color.Transparent,
+                Font = new Font("Microsoft YaHei UI", 8F, FontStyle.Regular)
             };
             this.Controls.Add(tipLabel);
             
@@ -78,6 +82,8 @@ namespace FlomoQuickNote
                 Location = new Point(20, 258),
                 Size = new Size(60, 25),
                 Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Bold),
+                ForeColor = Color.Black,
+                BackColor = Color.Transparent,
                 TextAlign = ContentAlignment.MiddleLeft
             };
             this.Controls.Add(tagLabel);
@@ -86,8 +92,10 @@ namespace FlomoQuickNote
             {
                 Location = new Point(85, 258),
                 Size = new Size(395, 25),
-                Font = new Font("Microsoft YaHei UI", 9F),
+                Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular),
                 BorderStyle = BorderStyle.FixedSingle,
+                BackColor = Color.White,
+                ForeColor = Color.Black,
                 Text = config.LastTags
             };
             tagsTextBox.KeyDown += TagsTextBox_KeyDown;
