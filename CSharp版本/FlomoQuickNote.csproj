@@ -10,11 +10,14 @@
     <Company>FlomoQuickNote</Company>
     <Product>Flomo快速记录</Product>
     <Description>通过全局快捷键快速记录笔记到Flomo</Description>
-    <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <PublishReadyToRun>true</PublishReadyToRun>
+    <!-- WinForms 应用不使用 SingleFile，以避免运行时问题 -->
+    <PublishSingleFile>false</PublishSingleFile>
+    <PublishReadyToRun>false</PublishReadyToRun>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <!-- 包含所有依赖 -->
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
   </PropertyGroup>
 
   <ItemGroup>
