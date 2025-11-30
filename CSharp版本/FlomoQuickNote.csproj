@@ -4,7 +4,6 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-    <ApplicationIcon>app.ico</ApplicationIcon>
     <AssemblyName>FlomoQuickNote</AssemblyName>
     <Version>1.0.0</Version>
     <Authors>FlomoQuickNote</Authors>
